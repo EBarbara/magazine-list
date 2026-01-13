@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/pagination.css' %}">
 </head>
 
 <body>
@@ -15,6 +16,10 @@
         <nav>
             <a href="{% url 'home' %}" class="logo">Magazine<span>List</span></a>
             <div>
+                <ul>
+                    <li><a href="{% url 'woman_list' %}">Mulheres</a></li>
+                    <li><a href="{% url 'issue_list' %}">Edições</a></li>
+                </ul>
                 <!-- Add nav items here if needed -->
             </div>
         </nav>

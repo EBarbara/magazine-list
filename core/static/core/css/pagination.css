@@ -1,0 +1,16 @@
+
+/* Pagination */
+.pagination {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.pagination .current {
+    margin: 0 1rem;
+    color: var(--text-secondary);
+}
+
+.pagination .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}

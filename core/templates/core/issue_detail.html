@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'home' %}">Home</a> /
+    <a href="{% url 'issue_list' %}">Edições</a> /
+    {{ issue }}
+</div>
+
+<h1>{{ issue }}</h1>
+
+<div class="card detail-section">
+    <h2 class="detail-header">Garotas nesta edição</h2>
+
+    {% if issue.appearance_set.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Seção</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appearance in issue.appearance_set.all %}
+            <tr>
+                <td>
+                    <a href="{% url 'woman_detail' appearance.woman.pk %}">
+                        {{ appearance.woman.name }}
+                    </a>
+                </td>
+                <td>
+                    <span class="section-badge">
+                        {{ appearance.section.name }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">Nenhuma garota encontrada nesta edição.</p>
+    {% endif %}
+</div>
+{% endblock %}

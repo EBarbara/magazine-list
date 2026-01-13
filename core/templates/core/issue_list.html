@@ -2,21 +2,21 @@
 
 {% block content %}
 <div class="breadcrumb">
-    <a href="{% url 'home' %}">Home</a> / Modelos
+    <a href="{% url 'home' %}">Home</a> / Edições
 </div>
 
-<h1>Nossas Modelos</h1>
+<h1>Edições</h1>
 
 <div class="grid-cards">
-    {% for woman in women %}
-    <a href="{% url 'woman_detail' woman.pk %}" class="card">
-        <h3>{{ woman.name }}</h3>
+    {% for issue in issues %}
+    <a href="{% url 'issue_detail' issue.pk %}" class="card">
+        <h3>{{ issue }}</h3>
         <p class="cta-text">
-            Ver aparições &rarr;
+            Ver detalhes &rarr;
         </p>
     </a>
     {% empty %}
-    <p class="empty-state">Nenhuma modelo encontrada.</p>
+    <p class="empty-state">Nenhuma edição encontrada.</p>
     {% endfor %}
 </div>
 

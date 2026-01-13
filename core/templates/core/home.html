@@ -2,10 +2,13 @@
 
 {% block content %}
 <div class="hero text-center">
-    <h1>Bem-vindo ao Magazine List</h1>
+    <h1>Bem vindo ao Magazine List</h1>
     <p class="hero-text">
-        Explore nossa coleção de revistas e aparições. Descubra em quais edições suas modelos favoritas apareceram.
+        Explore a coleção completa de revistas e modelos.
     </p>
-    <a href="{% url 'woman_list' %}" class="btn">Ver Todas as Modelos</a>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{% url 'woman_list' %}" class="btn">Ver todas as Mulheres</a>
+        <a href="{% url 'issue_list' %}" class="btn">Ver todas as Edições</a>
+    </div>
 </div>
 {% endblock %}
