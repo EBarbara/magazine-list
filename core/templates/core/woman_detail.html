@@ -52,6 +52,10 @@
                     </span>
                 </td>
                 <td>
+                    <a href="{% url 'woman_appearance_edit' appearance.pk %}" class="btn-icon-edit open-modal"
+                        title="Edit Appearance">
+                        {% include 'core/includes/icon_edit.html' %}
+                    </a>
                     <a href="{% url 'appearance_delete' appearance.pk %}?next={% url 'woman_detail' woman.pk %}"
                         class="btn-icon-delete open-modal" title="Delete Appearance">
                         {% include 'core/includes/icon_trash.html' %}

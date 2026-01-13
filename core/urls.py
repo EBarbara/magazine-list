@@ -14,4 +14,6 @@ urlpatterns = [
     path('woman/<int:pk>/appearance/new/', views.WomanAppearanceCreateView.as_view(), name='woman_appearance_create'),
     path('issue/<int:pk>/appearance/new/', views.IssueAppearanceCreateView.as_view(), name='issue_appearance_create'),
     path('appearance/<int:pk>/delete/', views.AppearanceDeleteView.as_view(), name='appearance_delete'),
+    path('appearance/<int:pk>/edit/woman/', views.WomanAppearanceUpdateView.as_view(), name='woman_appearance_edit'),
+    path('appearance/<int:pk>/edit/issue/', views.IssueAppearanceUpdateView.as_view(), name='issue_appearance_edit'),
 ]

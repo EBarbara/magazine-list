@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h2>Add Appearance to {{ issue }}</h2>
+<h2>{{ title|default:"Add Appearance" }}</h2>
 <form method="post">
     {% csrf_token %}
 

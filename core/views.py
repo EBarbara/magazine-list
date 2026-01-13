@@ -1,6 +1,6 @@
 import unicodedata
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from .models import Woman, Issue, Appearance, Section
 from .forms import IssueForm, WomanAppearanceForm, IssueAppearanceForm
@@ -101,6 +101,48 @@ class IssueAppearanceCreateView(CreateView):
         context['issue'] = Issue.objects.get(pk=self.kwargs['pk'])
         context['women'] = Woman.objects.all() # For datalist
         context['sections'] = Section.objects.all() # For datalist
+        return context
+
+class WomanAppearanceUpdateView(UpdateView):
+    model = Appearance
+    form_class = WomanAppearanceForm
+    template_name = 'core/appearance_form_woman.html'
+    
+    def get_success_url(self):
+        return reverse_lazy('woman_detail', kwargs={'pk': self.object.woman.pk})
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['section_name'] = self.object.section.name
+        return initial
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['woman'] = self.object.woman
+        context['sections'] = Section.objects.all() # For datalist
+        context['title'] = f"Edit Appearance for {self.object.woman.name}"
+        return context
+
+class IssueAppearanceUpdateView(UpdateView):
+    model = Appearance
+    form_class = IssueAppearanceForm
+    template_name = 'core/appearance_form_issue.html'
+
+    def get_success_url(self):
+        return reverse_lazy('issue_detail', kwargs={'pk': self.object.issue.pk})
+        
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['section_name'] = self.object.section.name
+        initial['woman_name'] = self.object.woman.name
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['issue'] = self.object.issue
+        context['women'] = Woman.objects.all() # For datalist
+        context['sections'] = Section.objects.all() # For datalist
+        context['title'] = f"Edit Appearance in {self.object.issue}"
         return context
 
 class AppearanceDeleteView(DeleteView):
