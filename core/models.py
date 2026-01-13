@@ -33,5 +33,8 @@ class Appearance(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['issue__publishing_date']
+
     def __str__(self):
         return f"{self.woman} in {self.issue} ({self.section})"
