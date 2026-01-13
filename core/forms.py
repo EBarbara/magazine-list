@@ -1,5 +1,78 @@
 from django import forms
 from .models import Issue, Appearance
+from datetime import date
+
+class BulkAppearanceForm(forms.Form):
+    content = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 10, 'placeholder': 'jan/90; 1; Capa\nfev/95; ; Entrevista'}),
+        help_text="Format: Month/Year; Edition; Section"
+    )
+
+    def clean_content(self):
+        content = self.cleaned_data['content']
+        lines = content.split('\n')
+        parsed_data = []
+        errors = []
+        
+        month_map = {
+            'jan': 1, 'fev': 2, 'mar': 3, 'abr': 4, 'mai': 5, 'jun': 6,
+            'jul': 7, 'ago': 8, 'set': 9, 'out': 10, 'nov': 11, 'dez': 12
+        }
+
+        for i, line in enumerate(lines):
+            line = line.strip()
+            if not line:
+                continue
+            
+            parts = line.split(';')
+            if len(parts) < 3:
+                errors.append(f"Line {i+1}: Invalid format (expected 'Month/Year; Edition; Section')")
+                continue
+                
+            month_year_str = parts[0].strip()
+            edition_str = parts[1].strip()
+            section_name = parts[2].strip()
+
+            # Parse Date
+            try:
+                if '/' not in month_year_str:
+                     raise ValueError("Missing '/'")
+                month_str, year_str = month_year_str.split('/')
+                month = month_map.get(month_str.lower())
+                if not month:
+                    raise ValueError(f"Invalid month '{month_str}'")
+                year = int(year_str)
+                
+                if year < 100:
+                    if year >= 50:
+                        year += 1900
+                    else:
+                        year += 2000
+                        
+                publishing_date = date(year, month, 1)
+            except (ValueError, IndexError):
+                errors.append(f"Line {i+1}: Invalid date '{month_year_str}'")
+                continue
+
+            # Parse Edition
+            edition = None
+            if edition_str:
+                try:
+                    edition = int(edition_str)
+                except ValueError:
+                    errors.append(f"Line {i+1}: Invalid edition '{edition_str}'")
+                    continue
+            
+            parsed_data.append({
+                'publishing_date': publishing_date,
+                'edition': edition,
+                'section_name': section_name
+            })
+            
+        if errors:
+            raise forms.ValidationError(errors)
+            
+        return parsed_data
 
 class IssueForm(forms.ModelForm):
     class Meta:

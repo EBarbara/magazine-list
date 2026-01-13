@@ -12,6 +12,7 @@ urlpatterns = [
     path('issue/<int:pk>/', views.IssueDetailView.as_view(), name='issue_detail'),
     path('issue/<int:pk>/delete/', views.IssueDeleteView.as_view(), name='issue_delete'),
     path('woman/<int:pk>/appearance/new/', views.WomanAppearanceCreateView.as_view(), name='woman_appearance_create'),
+    path('woman/<int:pk>/appearances/bulk/', views.WomanAppearanceBulkCreateView.as_view(), name='woman_appearance_bulk_add'),
     path('issue/<int:pk>/appearance/new/', views.IssueAppearanceCreateView.as_view(), name='issue_appearance_create'),
     path('appearance/<int:pk>/delete/', views.AppearanceDeleteView.as_view(), name='appearance_delete'),
     path('appearance/<int:pk>/edit/woman/', views.WomanAppearanceUpdateView.as_view(), name='woman_appearance_edit'),

@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const dialog = document.getElementById('generic-modal');
     const modalContent = dialog.querySelector('.modal-content');
-    const closeBtn = dialog.querySelector('.modal-close');
 
     // Close modal function
     const closeModal = () => {
@@ -9,9 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
         modalContent.innerHTML = ''; // Clear content
     };
 
-    closeBtn.addEventListener('click', closeModal);
+    // Event Delegation for Closing Modal
     dialog.addEventListener('click', (e) => {
-        if (e.target === dialog) closeModal();
+        // Close if clicked on backdrop
+        if (e.target === dialog) {
+            console.log("Closing modal...");
+            closeModal();
+            return;
+        }
+
+        // Close if clicked on any close/cancel button
+        const closeTrigger = e.target.closest('.modal-close, .close-modal, .btn-cancel');
+        if (closeTrigger) {
+            e.preventDefault();
+            closeModal();
+        }
     });
 
     // Handle Open Modal Clicks
@@ -30,15 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             const mainContent = doc.querySelector('main.container') || doc.body; // Fallback
-
-            // Handle Cancel Button in Modal
-            const cancelBtn = modalContent.querySelector('.btn-cancel');
-            if (cancelBtn) {
-                cancelBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    closeModal();
-                });
-            }
 
             modalContent.innerHTML = mainContent.innerHTML;
             dialog.showModal();
@@ -77,14 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
                     const mainContent = doc.querySelector('main.container') || doc.body;
-
-                    const cancelBtn = modalContent.querySelector('.btn-cancel');
-                    if (cancelBtn) {
-                        cancelBtn.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            closeModal();
-                        });
-                    }
 
                     modalContent.innerHTML = mainContent.innerHTML;
 

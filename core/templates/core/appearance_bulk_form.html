@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="modal-header">
+    <h2>{{ title }}</h2>
+    <button type="button" class="close-modal" aria-label="Close">&times;</button>
+</div>
+
+<form method="post" class="modal-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.content.id_for_label }}">Bulk Data (Format: Month/Year; Edition; Section)</label>
+        {{ form.content }}
+        <div class="help-text">
+            Example:<br>
+            jan/90; 1; Capa<br>
+            fev/95; ; Entrevista
+        </div>
+        {% if form.content.errors %}
+        <div class="error-message">
+            {{ form.content.errors }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-actions">
+        <a href="{% url 'woman_detail' woman.pk %}" class="btn-secondary btn-cancel"
+            onclick="if(document.querySelector('dialog[open]')){event.preventDefault(); document.getElementById('generic-modal').close();}">Cancel</a>
+        <button type="submit" class="btn-primary">Add Appearances</button>
+    </div>
+</form>
+{% endblock %}

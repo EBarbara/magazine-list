@@ -1,9 +1,46 @@
 import unicodedata
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
 from django.urls import reverse_lazy
 from .models import Woman, Issue, Appearance, Section
-from .forms import IssueForm, WomanAppearanceForm, IssueAppearanceForm
+from .forms import IssueForm, WomanAppearanceForm, IssueAppearanceForm, BulkAppearanceForm
+from datetime import date
+
+# ... (existing imports)
+
+class WomanAppearanceBulkCreateView(FormView):
+    form_class = BulkAppearanceForm
+    template_name = 'core/appearance_bulk_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('woman_detail', kwargs={'pk': self.kwargs['pk']})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['woman'] = Woman.objects.get(pk=self.kwargs['pk'])
+        context['title'] = f"Bulk Add Appearances for {context['woman'].name}"
+        return context
+
+    def form_valid(self, form):
+        woman = Woman.objects.get(pk=self.kwargs['pk'])
+        # content is now a list of dicts from clean_content
+        parsed_data = form.cleaned_data['content'] 
+
+        for data in parsed_data:
+            section, _ = Section.objects.get_or_create(name=data['section_name'])
+            issue, _ = Issue.objects.get_or_create(
+                publishing_date=data['publishing_date'],
+                edition=data['edition']
+            )
+
+            Appearance.objects.create(
+                woman=woman,
+                section=section,
+                issue=issue
+            )
+            
+        return super().form_valid(form)
+
 
 def home(request):
     return render(request, 'core/home.html')
