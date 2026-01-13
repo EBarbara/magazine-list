@@ -7,10 +7,23 @@
     {{ issue }}
 </div>
 
-<h1>{{ issue }}</h1>
+<div class="header-actions">
+    <h1>{{ issue }}</h1>
+    <a href="{% url 'issue_delete' issue.pk %}" class="btn-trash open-modal" title="Delete Issue">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+    </a>
+</div>
 
 <div class="card detail-section">
-    <h2 class="detail-header">Garotas nesta edição</h2>
+    <div class="header-actions" style="margin-bottom: 1rem;">
+        <h2 class="detail-header" style="margin-bottom: 0;">Garotas nesta edição</h2>
+        <a href="{% url 'issue_appearance_create' issue.pk %}" class="btn-circle-add open-modal"
+            style="width: 32px; height: 32px; font-size: 20px;">+</a>
+    </div>
 
     {% if issue.appearance_set.all %}
     <table>
@@ -18,6 +31,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Seção</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +46,12 @@
                     <span class="section-badge">
                         {{ appearance.section.name }}
                     </span>
+                </td>
+                <td>
+                    <a href="{% url 'appearance_delete' appearance.pk %}?next={% url 'issue_detail' issue.pk %}"
+                        class="btn-icon-delete open-modal" title="Delete Appearance">
+                        {% include 'core/includes/icon_trash.html' %}
+                    </a>
                 </td>
             </tr>
             {% endfor %}

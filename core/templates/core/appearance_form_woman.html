@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Add Appearance for {{ woman.name }}</h2>
+<form method="post">
+    {% csrf_token %}
+
+    <!-- Issue Selection -->
+    <fieldset style="border: 1px solid rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+        <legend>Issue</legend>
+        {{ form.issue.label_tag }}
+        {{ form.issue }}
+
+        <p style="text-align: center; margin: 0.5rem 0;">— OR —</p>
+
+        {{ form.new_issue_date.label_tag }}
+        {{ form.new_issue_date }}
+
+        {{ form.new_issue_edition.label_tag }}
+        {{ form.new_issue_edition }}
+    </fieldset>
+
+    <!-- Section -->
+    {{ form.section_name.label_tag }}
+    {{ form.section_name }}
+    <datalist id="sections-list">
+        {% for section in sections %}
+        <option value="{{ section.name }}">
+            {% endfor %}
+    </datalist>
+
+    <div class="form-actions">
+        <a href="{% url 'woman_detail' woman.pk %}" class="btn-cancel">Cancel</a>
+        <button type="submit">Save</button>
+    </div>
+</form>
+{% endblock %}

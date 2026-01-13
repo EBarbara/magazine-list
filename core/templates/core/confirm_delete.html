@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2 style="margin-bottom: 1rem;">Confirm Delete</h2>
+<p style="margin-bottom: 2rem; color: var(--text-secondary);">
+    Are you sure you want to delete "{{ object }}"? This action cannot be undone.
+</p>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-actions">
+        <a href="javascript:history.back()" class="btn-cancel"
+            onclick="if(document.querySelector('dialog[open]')){event.preventDefault(); document.getElementById('generic-modal').close();}">Cancel</a>
+        <button type="submit" class="btn-delete" style="background-color: #ef4444;">Confirm Delete</button>
+    </div>
+</form>
+{% endblock %}

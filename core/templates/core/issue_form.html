@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>New Issue</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-actions">
+        <a href="{% url 'issue_list' %}" class="btn-cancel">Cancel</a>
+        <button type="submit">Save</button>
+    </div>
+</form>
+{% endblock %}

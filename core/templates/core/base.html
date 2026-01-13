@@ -9,6 +9,8 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/pagination.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/ui_refinements.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/modal.css' %}">
 </head>
 
 <body>
@@ -29,6 +31,18 @@
         {% block content %}
         {% endblock %}
     </main>
+
+    <dialog id="generic-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2></h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <!-- Dynamic Content -->
+        </div>
+    </dialog>
+
+    <script src="{% static 'core/js/modal.js' %}"></script>
 </body>
 
 </html>

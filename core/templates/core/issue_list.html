@@ -1,8 +1,11 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<div class="breadcrumb">
-    <a href="{% url 'home' %}">Home</a> / Edições
+<div class="header-actions">
+    <div class="breadcrumb">
+        <a href="{% url 'home' %}">Home</a> / Edições
+    </div>
+    <a href="{% url 'issue_create' %}" class="btn-circle-add open-modal" title="Nova Edição">+</a>
 </div>
 
 <h1>Edições</h1>

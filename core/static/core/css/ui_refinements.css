@@ -1,0 +1,91 @@
+/* Header Actions */
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.btn-circle-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-circle-add:hover {
+    transform: scale(1.1);
+    background-color: var(--hover-color);
+    color: var(--white);
+}
+
+/* Ensure breadcrumb doesn't have bottom margin that interferes */
+.header-actions .breadcrumb {
+    margin-bottom: 0;
+}
+
+/* Trash Button (Header) */
+.btn-trash {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(239, 68, 68, 0.1);
+    /* Red-500 equivalent with opacity */
+    color: #ef4444;
+    /* Red-500 */
+    transition: all 0.2s ease;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.btn-trash:hover {
+    background-color: #ef4444;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+}
+
+/* Table Icon Actions */
+.btn-icon-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 4px;
+    color: #9ca3af;
+    /* Gray-400 */
+    transition: all 0.2s;
+}
+
+.btn-icon-delete:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.icon-trash {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-delete {
+    background-color: #ef4444;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.btn-delete:hover {
+    background-color: #dc2626;
+    /* Red-600 */
+}

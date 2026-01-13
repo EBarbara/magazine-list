@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Add Appearance to {{ issue }}</h2>
+<form method="post">
+    {% csrf_token %}
+
+    <!-- Woman -->
+    {{ form.woman_name.label_tag }}
+    {{ form.woman_name }}
+    <datalist id="women-list">
+        {% for woman in women %}
+        <option value="{{ woman.name }}">
+            {% endfor %}
+    </datalist>
+
+    <!-- Section -->
+    {{ form.section_name.label_tag }}
+    {{ form.section_name }}
+    <datalist id="sections-list">
+        {% for section in sections %}
+        <option value="{{ section.name }}">
+            {% endfor %}
+    </datalist>
+
+    <div class="form-actions">
+        <a href="{% url 'issue_detail' issue.pk %}" class="btn-cancel">Cancel</a>
+        <button type="submit">Save</button>
+    </div>
+</form>
+{% endblock %}
