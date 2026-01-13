@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'home' %}">Home</a> /
+    <a href="{% url 'woman_list' %}">Modelos</a> /
+    {{ woman.name }}
+</div>
+
+<h1>{{ woman.name }}</h1>
+
+<div class="card detail-section">
+    <h2 class="detail-header">Aparições</h2>
+
+    {% if woman.appearance_set.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Revista / Data</th>
+                <th>Edição</th>
+                <th>Seção</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appearance in woman.appearance_set.all %}
+            <tr>
+                <td>{{ appearance.issue.publishing_date|date:"F Y"|title }}</td>
+                <td>
+                    {% if appearance.issue.edition %}
+                    Ed. {{ appearance.issue.edition }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="section-badge">
+                        {{ appearance.section.name }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">Nenhuma aparição registrada para esta modelo.</p>
+    {% endif %}
+</div>
+{% endblock %}

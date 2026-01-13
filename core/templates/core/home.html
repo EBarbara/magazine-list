@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="hero text-center">
+    <h1>Bem-vindo ao Magazine List</h1>
+    <p class="hero-text">
+        Explore nossa coleção de revistas e aparições. Descubra em quais edições suas modelos favoritas apareceram.
+    </p>
+    <a href="{% url 'woman_list' %}" class="btn">Ver Todas as Modelos</a>
+</div>
+{% endblock %}
