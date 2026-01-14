@@ -25,37 +25,65 @@
             style="width: 32px; height: 32px; font-size: 20px;">+</a>
     </div>
 
-    {% if issue.appearance_set.all %}
+    {% if sections_data %}
     <table>
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Seção</th>
-                <th>Actions</th>
+                <th style="width: 20%;">Seção</th>
+                <th style="width: 60%;">Mulheres</th>
+                <th style="width: 20%;">Ações</th>
             </tr>
         </thead>
         <tbody>
-            {% for appearance in issue.appearance_set.all %}
+            {% for group in sections_data %}
             <tr>
-                <td>
-                    <a href="{% url 'woman_detail' appearance.woman.pk %}">
-                        {{ appearance.woman.name }}
-                    </a>
-                </td>
+                <!-- Seção Column -->
                 <td>
                     <span class="section-badge">
-                        {{ appearance.section.name }}
+                        {{ group.section.name }}
                     </span>
                 </td>
+
+                <!-- Mulheres Column -->
                 <td>
-                    <a href="{% url 'issue_appearance_edit' appearance.pk %}" class="btn-icon-edit open-modal"
-                        title="Edit Appearance">
-                        {% include 'core/includes/icon_edit.html' %}
-                    </a>
-                    <a href="{% url 'appearance_delete' appearance.pk %}?next={% url 'issue_detail' issue.pk %}"
-                        class="btn-icon-delete open-modal" title="Delete Appearance">
-                        {% include 'core/includes/icon_trash.html' %}
-                    </a>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                        {% for appearance in group.appearances %}
+                        <div class="woman-pill" style="display: inline-flex; align-items: center; background-color: #f3f4f6; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">
+                            <a href="{% url 'woman_detail' appearance.woman.pk %}" style="color: #374151; text-decoration: none; margin-right: 0.5rem;">
+                                {{ appearance.woman.name }}
+                            </a>
+                            <a href="{% url 'appearance_delete' appearance.pk %}?next={% url 'issue_detail' issue.pk %}" 
+                               class="open-modal"
+                               style="color: #ef4444; cursor: pointer; display: flex; align-items: center;"
+                               title="Remove {{ appearance.woman.name }} from this section">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </a>
+                        </div>
+                        {% endfor %}
+                        
+                        <!-- Add Woman to Section Button -->
+                        <a href="{% url 'issue_appearance_create' issue.pk %}?section_id={{ group.section.pk }}" 
+                           class="btn-circle-add-small open-modal"
+                           style="width: 24px; height: 24px; font-size: 16px; background-color: #e5e7eb; color: #4b5563; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none;"
+                           title="Add Woman to {{ group.section.name }}">
+                            +
+                        </a>
+                    </div>
+                </td>
+
+                <!-- Ações Column -->
+                <td>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="{% url 'issue_section_update' issue.pk group.section.pk %}" class="btn-icon-edit open-modal" title="Edit Section Group">
+                            {% include 'core/includes/icon_edit.html' %}
+                        </a>
+                        <a href="{% url 'issue_section_delete' issue.pk group.section.pk %}" class="btn-icon-delete open-modal" title="Delete Section Group">
+                            {% include 'core/includes/icon_trash.html' %}
+                        </a>
+                    </div>
                 </td>
             </tr>
             {% endfor %}

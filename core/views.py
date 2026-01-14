@@ -78,6 +78,30 @@ class IssueDetailView(DetailView):
     template_name = 'core/issue_detail.html'
     context_object_name = 'issue'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        issue = self.object
+        
+        # Group appearances by section
+        appearances = issue.appearance_set.select_related('woman', 'section').order_by('section__name', 'woman__name')
+        
+        grouped_appearances = {}
+        for app in appearances:
+            if app.section not in grouped_appearances:
+                grouped_appearances[app.section] = []
+            grouped_appearances[app.section].append(app)
+            
+        # Convert to list of dicts for template
+        context['sections_data'] = [
+            {'section': section, 'appearances': apps} 
+            for section, apps in grouped_appearances.items()
+        ]
+        
+        # Sort sections by name
+        context['sections_data'].sort(key=lambda x: x['section'].name)
+        
+        return context
+
 class WomanCreateView(CreateView):
     model = Woman
     fields = ['name']
@@ -102,6 +126,7 @@ class IssueDeleteView(DeleteView):
 
 from .forms import WomanAppearanceForm, IssueAppearanceForm
 from .models import Appearance, Section
+from django import forms
 
 class WomanAppearanceCreateView(CreateView):
     model = Appearance
@@ -128,6 +153,18 @@ class IssueAppearanceCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('issue_detail', kwargs={'pk': self.kwargs['pk']})
+
+    def get_initial(self):
+        initial = super().get_initial()
+        # Pre-fill section if passed in GET (e.g. from the + button in a section row)
+        section_id = self.request.GET.get('section_id')
+        if section_id:
+            try:
+                section = Section.objects.get(pk=section_id)
+                initial['section_name'] = section.name
+            except Section.DoesNotExist:
+                pass
+        return initial
 
     def form_valid(self, form):
         form.instance.issue = Issue.objects.get(pk=self.kwargs['pk'])
@@ -187,28 +224,74 @@ class AppearanceDeleteView(DeleteView):
     template_name = 'core/confirm_delete.html'
     
     def get_success_url(self):
-        # We want to go back to where we came from (Woman Detail or Issue Detail)
-        # Check if ?next= is in the request (passed from template)
         next_url = self.request.GET.get('next')
         if next_url:
             return next_url
-            
-        # Fallback based on specific logic if next isn't present
-        # If we have a woman context (unlikely to know purely from appearance deletion unless we check relations)
-        # But actually, deleting the object removes the relation, so self.object might be gone by the time we check?
-        # DeleteView calls delete() which calls get_success_url() AFTER?
-        # Wait, delete() calls get_success_url() *then* deletes? No.
-        # Standard DeleteView implementation:
-        # def delete(self, request, *args, **kwargs):
-        #     self.object = self.get_object()
-        #     success_url = self.get_success_url()
-        #     self.object.delete()
-        #     return HttpResponseRedirect(success_url)
-        # So self.object exists when get_success_url is called!
-        
-        if self.object.woman:
-             # Default fallback might be Woman List or Issue List?
-             # Let's try to infer interesting context, or just default to home.
-             pass
-             
         return reverse_lazy('home')
+
+class IssueSectionUpdateForm(forms.Form):
+    section_name = forms.CharField(label='New Section Name', max_length=255, widget=forms.TextInput(attrs={'list': 'sections-list', 'class': 'form-control', 'autocomplete': 'off'}))
+
+class IssueSectionUpdateView(FormView):
+    template_name = 'core/appearance_form_issue.html' # Reuse similar template
+    form_class = IssueSectionUpdateForm
+
+    def get_success_url(self):
+        return reverse_lazy('issue_detail', kwargs={'pk': self.kwargs['issue_pk']})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.issue = Issue.objects.get(pk=self.kwargs['issue_pk'])
+        self.section = Section.objects.get(pk=self.kwargs['section_pk'])
+        context['issue'] = self.issue
+        context['title'] = f"Update Section '{self.section.name}' for all appearances in {self.issue}"
+        context['sections'] = Section.objects.all() # For datalist
+        # We need a flag to differentiate template behavior if needed, or just use generic title
+        return context
+    
+    def get_initial(self):
+        initial = super().get_initial()
+        section = Section.objects.get(pk=self.kwargs['section_pk'])
+        initial['section_name'] = section.name
+        return initial
+
+    def form_valid(self, form):
+        issue = Issue.objects.get(pk=self.kwargs['issue_pk'])
+        old_section = Section.objects.get(pk=self.kwargs['section_pk'])
+        new_section_name = form.cleaned_data['section_name']
+        
+        new_section, _ = Section.objects.get_or_create(name=new_section_name)
+        
+        # Update all appearances for this issue and old_section
+        Appearance.objects.filter(issue=issue, section=old_section).update(section=new_section)
+        
+        return super().form_valid(form)
+
+class IssueSectionDeleteView(DeleteView):
+    # This is a bit tricky because DeleteView expects a single object.
+    # We are deleting a group of objects. We can simulate it.
+    template_name = 'core/confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        # We return the Section object just to have something to render in the template confirmation
+        return Section.objects.get(pk=self.kwargs['section_pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        issue = Issue.objects.get(pk=self.kwargs['issue_pk'])
+        section = self.get_object()
+        count = Appearance.objects.filter(issue=issue, section=section).count()
+        context['object_name'] = f"Section '{section.name}' from {issue} (will delete {count} appearances)"
+        context['cancel_url'] = reverse_lazy('issue_detail', kwargs={'pk': issue.pk})
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('issue_detail', kwargs={'pk': self.kwargs['issue_pk']})
+
+    def delete(self, request, *args, **kwargs):
+        issue = Issue.objects.get(pk=self.kwargs['issue_pk'])
+        section = self.get_object()
+        Appearance.objects.filter(issue=issue, section=section).delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+from django.http import HttpResponseRedirect
