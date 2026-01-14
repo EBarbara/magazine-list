@@ -106,13 +106,17 @@ class WomanCreateView(CreateView):
     model = Woman
     fields = ['name']
     template_name = 'core/woman_form.html'
-    success_url = reverse_lazy('woman_list')
+
+    def get_success_url(self):
+        return reverse_lazy('woman_detail', kwargs={'pk': self.object.pk})
 
 class IssueCreateView(CreateView):
     model = Issue
     form_class = IssueForm
     template_name = 'core/issue_form.html'
-    success_url = reverse_lazy('issue_list')
+
+    def get_success_url(self):
+        return reverse_lazy('issue_detail', kwargs={'pk': self.object.pk})
 
 class WomanDeleteView(DeleteView):
     model = Woman
