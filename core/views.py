@@ -1,5 +1,5 @@
 import unicodedata
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
 from django.urls import reverse_lazy
 from .models import Woman, Issue, Appearance, Section
@@ -56,9 +56,24 @@ class WomanListView(ListView):
     context_object_name = 'women'
     paginate_by = 20
 
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q')
+        if query:
+            # Check for exact match (case-insensitive) to redirect
+            exact_match = Woman.objects.filter(name__iexact=query).first()
+            if exact_match:
+                return redirect('woman_detail', pk=exact_match.pk)
+        
+        return super().get(request, *args, **kwargs)
+
     def get_queryset(self):
         # Sort in Python to handle accents correctly (SQLite limitation)
         queryset = super().get_queryset()
+        
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(name__icontains=query)
+
         return sorted(queryset, key=lambda w: normalize_text(w.name))
 
 class WomanDetailView(DetailView):

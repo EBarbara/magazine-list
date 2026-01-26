@@ -95,13 +95,16 @@ h1 {
     color: white;
 }
 
-.btn.disabled, .btn:disabled {
+.btn.disabled,
+.btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background: var(--surface-dark); /* or just keep existing background with opacity */
+    background: var(--surface-dark);
+    /* or just keep existing background with opacity */
     transform: none;
     box-shadow: none;
-    pointer-events: none; /* Prevent clicks */
+    pointer-events: none;
+    /* Prevent clicks */
 }
 
 /* Components */
@@ -222,4 +225,31 @@ tr:hover td {
 
 .empty-state {
     color: var(--text-secondary);
+}
+
+/* Search Form */
+.search-container {
+    margin: 1.5rem 0;
+}
+
+.search-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 400px;
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    background-color: var(--surface-dark);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-form input[type="text"]:focus {
+    border-color: var(--primary-color);
 }
