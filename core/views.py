@@ -71,7 +71,55 @@ class IssueListView(ListView):
     template_name = 'core/issue_list.html'
     context_object_name = 'issues'
     ordering = ['publishing_date']
-    paginate_by = 20
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Get all distinct years from the database
+        # We need to list them to find prev/next/first/last
+        # dates('publishing_date', 'year') returns datetime.date objects with year set
+        years_date = Issue.objects.dates('publishing_date', 'year', order='ASC')
+        self.years = sorted(list(set(d.year for d in years_date)))
+
+        if not self.years:
+            return queryset.none()
+
+        # Determine current year
+        year_param = self.request.GET.get('year')
+        if year_param and year_param.isdigit():
+            self.current_year = int(year_param)
+            if self.current_year not in self.years:
+                # If invalid year, fallback to first year
+                 self.current_year = self.years[0]
+        else:
+            # Default to the first year (oldest)
+            self.current_year = self.years[0]
+
+        return queryset.filter(publishing_date__year=self.current_year)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        if not hasattr(self, 'years') or not self.years:
+            return context
+
+        context['current_year'] = self.current_year
+        context['years'] = self.years
+        
+        # Navigation logic
+        context['first_year'] = self.years[0]
+        context['last_year'] = self.years[-1]
+
+        # Previous/Next
+        try:
+            curr_index = self.years.index(self.current_year)
+            context['previous_year'] = self.years[curr_index - 1] if curr_index > 0 else None
+            context['next_year'] = self.years[curr_index + 1] if curr_index < len(self.years) - 1 else None
+        except ValueError:
+            # Should not happen as we validate current_year
+            pass
+            
+        return context
 
 class IssueDetailView(DetailView):
     model = Issue

@@ -95,6 +95,15 @@ h1 {
     color: white;
 }
 
+.btn.disabled, .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--surface-dark); /* or just keep existing background with opacity */
+    transform: none;
+    box-shadow: none;
+    pointer-events: none; /* Prevent clicks */
+}
+
 /* Components */
 .card {
     background-color: var(--surface-dark);

@@ -23,23 +23,53 @@
     {% endfor %}
 </div>
 
-{% if is_paginated %}
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-        <a href="?page=1" class="btn">&laquo; Primeira</a>
-        <a href="?page={{ page_obj.previous_page_number }}" class="btn">Anterior</a>
+{% if years %}
+<div class="pagination-container"
+    style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 2rem;">
+
+    <div class="pagination-controls" style="display: flex; align-items: center; gap: 0.5rem;">
+        <!-- First Year -->
+        {% if current_year != first_year %}
+        <a href="?year={{ first_year }}" class="btn" title="First Year ({{ first_year }})">&laquo; First</a>
+        {% else %}
+        <span class="btn disabled">&laquo; First</span>
         {% endif %}
 
-        <span class="current">
-            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        <!-- Previous Year -->
+        {% if previous_year %}
+        <a href="?year={{ previous_year }}" class="btn" title="Previous Year ({{ previous_year }})">&lsaquo; Prev</a>
+        {% else %}
+        <span class="btn disabled">&lsaquo; Prev</span>
+        {% endif %}
+
+        <!-- Current Year Display -->
+        <span class="current-year" style="font-weight: bold; font-size: 1.2rem; padding: 0 1rem;">
+            {{ current_year }}
         </span>
 
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}" class="btn">Próxima</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn">Última &raquo;</a>
+        <!-- Next Year -->
+        {% if next_year %}
+        <a href="?year={{ next_year }}" class="btn" title="Next Year ({{ next_year }})">Next &rsaquo;</a>
+        {% else %}
+        <span class="btn disabled">Next &rsaquo;</span>
         {% endif %}
-    </span>
+
+        <!-- Last Year -->
+        {% if current_year != last_year %}
+        <a href="?year={{ last_year }}" class="btn" title="Last Year ({{ last_year }})">Last &raquo;</a>
+        {% else %}
+        <span class="btn disabled">Last &raquo;</span>
+        {% endif %}
+    </div>
+
+    <!-- Go to specific year form -->
+    <form action="" method="get" class="goto-year-form" style="display: flex; align-items: center; gap: 0.5rem;">
+        <label for="year-input">Go to year:</label>
+        <input type="number" id="year-input" name="year" min="{{ first_year }}" max="{{ last_year }}"
+            value="{{ current_year }}" class="form-control" style="width: 80px; text-align: center;">
+        <button type="submit" class="btn btn-sm">Go</button>
+    </form>
+
 </div>
 {% endif %}
 {% endblock %}
