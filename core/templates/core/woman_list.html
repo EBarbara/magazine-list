@@ -20,10 +20,12 @@
 <div class="grid-cards">
     {% for woman in women %}
     <a href="{% url 'woman_detail' woman.pk %}" class="card">
-        <h3>{{ woman.name }}</h3>
-        <p class="cta-text">
-            Ver aparições &rarr;
-        </p>
+        <div class="card-content">
+            <h3>{{ woman.name }}</h3>
+            <p class="cta-text">
+                Ver aparições &rarr;
+            </p>
+        </div>
     </a>
     {% empty %}
     <p class="empty-state">Nenhuma modelo encontrada.</p>

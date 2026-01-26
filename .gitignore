@@ -25,3 +25,6 @@ venv.bak/
 # Data files
 *.csv
 *.json
+
+# Media files
+media/

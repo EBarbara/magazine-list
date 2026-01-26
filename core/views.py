@@ -88,7 +88,7 @@ class IssueListView(ListView):
     ordering = ['publishing_date']
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().prefetch_related('covers')
         
         # Get all distinct years from the database
         # We need to list them to find prev/next/first/last

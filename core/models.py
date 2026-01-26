@@ -28,6 +28,13 @@ class Issue(models.Model):
         edition_str = f" Ed. {self.edition}" if self.edition else ""
         return f"{self.publishing_date.strftime('%b/%y')}{edition_str}"
 
+class IssueCover(models.Model):
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='covers')
+    image = models.ImageField(upload_to='covers/')
+
+    def __str__(self):
+        return f"Cover for {self.issue}"
+
 class Appearance(models.Model):
     woman = models.ForeignKey(Woman, on_delete=models.CASCADE)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)

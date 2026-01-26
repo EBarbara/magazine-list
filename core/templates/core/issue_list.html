@@ -13,15 +13,67 @@
 <div class="grid-cards">
     {% for issue in issues %}
     <a href="{% url 'issue_detail' issue.pk %}" class="card">
-        <h3>{{ issue }}</h3>
-        <p class="cta-text">
-            Ver detalhes &rarr;
-        </p>
+        <div class="card-cover">
+            {% with covers=issue.covers.all %}
+            {% if covers %}
+            {% for cover in covers %}
+            <img src="{{ cover.image.url }}" id="cover-{{ issue.pk }}-{{ forloop.counter0 }}"
+                class="cover-image {% if forloop.first %}active{% endif %}" alt="Cover {{ forloop.counter }}">
+            {% endfor %}
+
+            {% if covers|length > 1 %}
+            <div class="cover-nav">
+                {% for cover in covers %}
+                <button type="button" class="nav-dot {% if forloop.first %}active{% endif %}"
+                    data-index="{{ forloop.counter0 }}"
+                    onclick="switchCover(event, {{ issue.pk }}, {{ forloop.counter0 }})"></button>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% else %}
+            <div
+                style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af;">
+                No Cover
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div class="card-content">
+            <h3>{{ issue }}</h3>
+            <p class="cta-text">
+                Ver detalhes &rarr;
+            </p>
+        </div>
     </a>
     {% empty %}
     <p class="empty-state">Nenhuma edição encontrada.</p>
     {% endfor %}
 </div>
+
+<script>
+    function switchCover(event, issueId, index) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const card = event.target.closest('.card');
+
+        // Hide all active images
+        const images = card.querySelectorAll('.cover-image');
+        images.forEach(img => img.classList.remove('active'));
+
+        // Show target image
+        const targetImg = card.querySelector(`#cover-${issueId}-${index}`);
+        if (targetImg) targetImg.classList.add('active');
+
+        // Update dots
+        const dots = card.querySelectorAll('.nav-dot');
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        // Activate target dot
+        const targetDot = card.querySelector(`.nav-dot[data-index="${index}"]`);
+        if (targetDot) targetDot.classList.add('active');
+    }
+</script>
 
 {% if years %}
 <div class="pagination-container"
