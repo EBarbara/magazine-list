@@ -2,8 +2,10 @@ import unicodedata
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
 from django.urls import reverse_lazy
-from .models import Woman, Issue, Appearance, Section
-from .forms import IssueForm, WomanAppearanceForm, IssueAppearanceForm, BulkAppearanceForm
+from .models import Woman, Issue, Appearance, Section, IssueCover
+from .forms import IssueForm, WomanAppearanceForm, IssueAppearanceForm, BulkAppearanceForm, IssueCoverUrlForm, IssueCoverForm
+import urllib.request
+from django.core.files.base import ContentFile
 from datetime import date
 
 # ... (existing imports)
@@ -360,5 +362,68 @@ class IssueSectionDeleteView(DeleteView):
         section = self.get_object()
         Appearance.objects.filter(issue=issue, section=section).delete()
         return HttpResponseRedirect(self.get_success_url())
+
+class IssueCoverFromUrlView(FormView):
+    template_name = 'core/cover_from_url_form.html'
+    form_class = IssueCoverUrlForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['issue'] = Issue.objects.get(pk=self.kwargs['issue_pk'])
+        context['title'] = f"Add Cover from URL for {context['issue']}"
+        return context
+
+    def form_valid(self, form):
+        url = form.cleaned_data['url']
+        issue = Issue.objects.get(pk=self.kwargs['issue_pk'])
+        
+        try:
+            # Download image
+            req = urllib.request.Request(
+                url, 
+                data=None, 
+                headers={
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+                }
+            )
+            with urllib.request.urlopen(req) as response:
+                if response.getcode() == 200:
+                    image_content = response.read()
+                    # Guess filename from URL or default
+                    filename = url.split('/')[-1].split('?')[0]
+                    if not filename:
+                        filename = "cover.jpg"
+                    
+                    cover = IssueCover(issue=issue)
+                    cover.image.save(filename, ContentFile(image_content), save=True)
+                else:
+                    form.add_error('url', f"Failed to download image. Status code: {response.getcode()}")
+                    return self.form_invalid(form)
+        except Exception as e:
+            form.add_error('url', f"Error downloading image: {str(e)}")
+            return self.form_invalid(form)
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('issue_detail', kwargs={'pk': self.kwargs['issue_pk']})
+
+class IssueCoverCreateView(CreateView):
+    model = IssueCover
+    form_class = IssueCoverForm
+    template_name = 'core/cover_form.html'
+
+    def form_valid(self, form):
+        form.instance.issue = Issue.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['issue'] = Issue.objects.get(pk=self.kwargs['pk'])
+        context['title'] = f"Upload Cover for {context['issue']}"
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('issue_detail', kwargs={'pk': self.kwargs['pk']})
 
 from django.http import HttpResponseRedirect

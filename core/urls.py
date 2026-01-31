@@ -19,4 +19,6 @@ urlpatterns = [
     path('appearance/<int:pk>/edit/issue/', views.IssueAppearanceUpdateView.as_view(), name='issue_appearance_edit'),
     path('issue/<int:issue_pk>/section/<int:section_pk>/edit/', views.IssueSectionUpdateView.as_view(), name='issue_section_update'),
     path('issue/<int:issue_pk>/section/<int:section_pk>/delete/', views.IssueSectionDeleteView.as_view(), name='issue_section_delete'),
+    path('issue/<int:issue_pk>/cover/url/', views.IssueCoverFromUrlView.as_view(), name='issue_cover_url_add'),
+    path('issue/<int:pk>/cover/new/', views.IssueCoverCreateView.as_view(), name='issue_cover_create'),
 ]

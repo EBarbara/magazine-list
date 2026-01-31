@@ -1,5 +1,5 @@
 from django import forms
-from .models import Issue, Appearance
+from .models import Issue, Appearance, IssueCover
 from datetime import date
 
 class BulkAppearanceForm(forms.Form):
@@ -201,3 +201,11 @@ class IssueAppearanceForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+class IssueCoverUrlForm(forms.Form):
+    url = forms.URLField(label="Image URL", required=True, widget=forms.TextInput(attrs={'placeholder': 'https://example.com/image.jpg'}))
+
+class IssueCoverForm(forms.ModelForm):
+    class Meta:
+        model = IssueCover
+        fields = ['image']
