@@ -38,15 +38,125 @@
     </div>
 </div>
 
+<style>
+    .cover-card {
+        width: 200px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: default;
+        position: relative;
+    }
+
+    /* State for double covers (foldout) */
+    .cover-card.double-cover {
+        cursor: pointer;
+    }
+
+    /* Folded state: Default for double covers */
+    .cover-card.double-cover.folded {
+        width: 200px;
+    }
+
+    .cover-card.double-cover.folded img {
+        width: 200%;
+        max-width: none !important;
+        /* Show the left half (Primary) as requested */
+        transform: translateX(0);
+        transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* Unfolded state */
+    .cover-card.double-cover.unfolded {
+        /* Width will be set by JS usually to maintain height consistency */
+    }
+
+    .cover-card.double-cover.unfolded img {
+        width: 100%;
+        transform: translateX(0);
+        transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* Ensure image is block */
+    .cover-card img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+</style>
+
 {% if issue.covers.exists %}
 <div class="covers-gallery" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
     {% for cover in issue.covers.all %}
-    <div class="cover-card"
-        style="width: 200px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <img src="{{ cover.image.url }}" alt="Cover" style="width: 100%; height: auto; display: block;">
+    <div class="cover-card">
+        <img src="{{ cover.image.url }}" alt="Cover">
     </div>
     {% endfor %}
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const coverCards = document.querySelectorAll('.cover-card');
+
+        coverCards.forEach(card => {
+            const img = card.querySelector('img');
+
+            function handleImageLoad() {
+                // Check if it's a double cover (Landscape orientation)
+                // Using a threshold of 1.2 aspect ratio to be safe
+                const aspect = img.naturalWidth / img.naturalHeight;
+
+                if (aspect > 1.2) {
+                    card.classList.add('double-cover', 'folded');
+
+                    // Add click to toggle
+                    card.addEventListener('click', function () {
+                        const isFolded = card.classList.contains('folded');
+
+                        if (isFolded) {
+                            // Unfold
+                            // Calculate target width based on height to keep height constant
+                            // Folded state height:
+                            // We force width=200px. 
+                            // Folded Logic: Image width 200% -> 400px.
+                            // Height = 400 / aspect.
+                            const height = 400 / aspect; // This is the displayed height
+
+                            // Unfolded Logic:
+                            // We want width s.t. height is same?
+                            // Height = Width / aspect.
+                            // If we want Height to be same, then Width must be 400px.
+                            // So simply setting width to 400px should work if 200% was correct estimate.
+
+                            // More generic:
+                            // Folded Img Width = 2 * 200px = 400px.
+                            // If we want unfolded view to show full image at same scale, width should be 400px.
+                            // But maybe we want it distinct?
+                            // Let's just set width to what the image "would be" if width=100% at that height.
+                            // Yes, 400px.
+
+                            card.style.width = '400px';
+                            card.classList.remove('folded');
+                            card.classList.add('unfolded');
+                        } else {
+                            // Fold
+                            card.style.width = '200px';
+                            card.classList.remove('unfolded');
+                            card.classList.add('folded');
+                        }
+                    });
+                }
+            }
+
+            if (img.complete) {
+                handleImageLoad();
+            } else {
+                img.onload = handleImageLoad;
+            }
+        });
+    });
+</script>
 {% endif %}
 
 <div class="card detail-section">

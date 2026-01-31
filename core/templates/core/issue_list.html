@@ -73,6 +73,36 @@
         const targetDot = card.querySelector(`.nav-dot[data-index="${index}"]`);
         if (targetDot) targetDot.classList.add('active');
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const coverImages = document.querySelectorAll('.cover-image');
+
+        coverImages.forEach(img => {
+            function handleImageLoad() {
+                // Check if it's a double cover (Landscape orientation)
+                // Using a threshold of 1.2 aspect ratio to be safe
+                const aspect = img.naturalWidth / img.naturalHeight;
+
+                if (aspect > 1.2) {
+                    // It's a double cover.
+                    // Since it's object-fit: cover, centering chops off the sides.
+                    // We want to show the RIGHT side (front cover) usually, but user said "left side" in previous turn.
+                    // WAIT. Re-reading user request: 
+                    // "Em geral capas dobráveis têm como parte primária o lado esquerdo da imagem"
+                    // So user wants LEFT side.
+                    // Default object-position is 50% 50%.
+                    // We need '0% 50%' (left).
+                    img.style.objectPosition = 'left';
+                }
+            }
+
+            if (img.complete) {
+                handleImageLoad();
+            } else {
+                img.onload = handleImageLoad;
+            }
+        });
+    });
 </script>
 
 {% if years %}
