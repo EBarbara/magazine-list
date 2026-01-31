@@ -1,12 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<div class="breadcrumb">
-    <a href="{% url 'home' %}">Home</a> /
-    <a href="{% url 'issue_list' %}">Edições</a> /
-    <a href="{% url 'issue_detail' issue.pk %}">{{ issue }}</a> /
-    Upload Cover
-</div>
+
 
 <h2>{{ title|default:"Upload Cover" }}</h2>
 
