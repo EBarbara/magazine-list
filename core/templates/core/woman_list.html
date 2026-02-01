@@ -1,21 +1,22 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="header-actions">
     <div class="breadcrumb">
-        <a href="{% url 'home' %}">Home</a> / Modelos
+        <a href="{% url 'home' %}">Home</a> / {% trans "Models" %}
     </div>
-    <a href="{% url 'woman_create' %}" class="btn-circle-add open-modal" title="Nova Mulher">+</a>
+    <a href="{% url 'woman_create' %}" class="btn-circle-add open-modal" title="{% trans 'New Woman' %}">+</a>
 </div>
 
 <div class="search-container">
     <form method="get" action="" class="search-form">
-        <input type="text" name="q" placeholder="Buscar modelo..." value="{{ request.GET.q|default:'' }}">
-        <button type="submit" class="btn">Buscar</button>
+        <input type="text" name="q" placeholder="{% trans 'Search model...' %}" value="{{ request.GET.q|default:'' }}">
+        <button type="submit" class="btn">{% trans "Search" %}</button>
     </form>
 </div>
 
-<h1>Nossas Modelos</h1>
+<h1>{% trans "Our Models" %}</h1>
 
 <div class="grid-cards">
     {% for woman in women %}
@@ -23,12 +24,12 @@
         <div class="card-content">
             <h3>{{ woman.name }}</h3>
             <p class="cta-text">
-                Ver aparições &rarr;
+                {% trans "View appearances" %} &rarr;
             </p>
         </div>
     </a>
     {% empty %}
-    <p class="empty-state">Nenhuma modelo encontrada.</p>
+    <p class="empty-state">{% trans "No models found." %}</p>
     {% endfor %}
 </div>
 
@@ -36,17 +37,18 @@
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-        <a href="?page=1" class="btn">&laquo; Primeira</a>
-        <a href="?page={{ page_obj.previous_page_number }}" class="btn">Anterior</a>
+        <a href="?page=1" class="btn">&laquo; {% trans "First" %}</a>
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn">{% trans "Previous" %}</a>
         {% endif %}
 
         <span class="current">
-            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            {% blocktrans with number=page_obj.number num_pages=page_obj.paginator.num_pages trimmed %}Page {{ number }}
+            of {{ num_pages }}{% endblocktrans %}
         </span>
 
         {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}" class="btn">Próxima</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn">Última &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}" class="btn">{% trans "Next" %}</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn">{% trans "Last" %} &raquo;</a>
         {% endif %}
     </span>
 </div>

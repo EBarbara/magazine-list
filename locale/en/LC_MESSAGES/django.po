@@ -1,0 +1,207 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-01 15:25\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Actions"
+msgstr ""
+
+msgid "Appearance"
+msgstr ""
+
+msgid "Appearances"
+msgstr ""
+
+msgid "Bulk Add"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Delete Issue"
+msgstr ""
+
+msgid "Delete Woman"
+msgstr ""
+
+msgid "Ed."
+msgstr ""
+
+msgid "Edition"
+msgstr ""
+
+msgid "Explore the complete collection of magazines and models."
+msgstr ""
+
+msgid "First"
+msgstr ""
+
+msgid "First Year"
+msgstr ""
+
+msgid "Girls in this issue"
+msgstr ""
+
+msgid "Go"
+msgstr ""
+
+msgid "Go to year:"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Import Cover from URL"
+msgstr ""
+
+msgid "Issue"
+msgstr ""
+
+msgid "Issue Cover"
+msgstr ""
+
+msgid "Issue Covers"
+msgstr ""
+
+msgid "Issues"
+msgstr ""
+
+msgid "Last"
+msgstr ""
+
+msgid "Last Year"
+msgstr ""
+
+msgid "Magazine / Date"
+msgstr ""
+
+msgid "Models"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "New Issue"
+msgstr ""
+
+msgid "New Woman"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Next Year"
+msgstr ""
+
+msgid "No Cover"
+msgstr ""
+
+msgid "No appearances registered for this model."
+msgstr ""
+
+msgid "No girls found in this issue."
+msgstr ""
+
+msgid "No issues found."
+msgstr ""
+
+msgid "No models found."
+msgstr ""
+
+msgid "Our Models"
+msgstr ""
+
+msgid "Prev"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Previous Year"
+msgstr ""
+
+msgid "Publishing Date"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Search model..."
+msgstr ""
+
+msgid "Section"
+msgstr ""
+
+msgid "Sections"
+msgstr ""
+
+msgid "Upload & Save"
+msgstr ""
+
+msgid "Upload Cover from Computer"
+msgstr ""
+
+msgid "View all Issues"
+msgstr ""
+
+msgid "View all Women"
+msgstr ""
+
+msgid "View appearances"
+msgstr ""
+
+msgid "View details"
+msgstr ""
+
+msgid "Welcome to Magazine List"
+msgstr ""
+
+msgid "Woman"
+msgstr ""
+
+msgid "Women"
+msgstr ""
+
+msgid "string"
+msgstr ""
+
+
+msgid "First"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Last"
+msgstr ""
+
+msgid "First Year"
+msgstr ""
+
+msgid "Previous Year"
+msgstr ""
+
+msgid "Next Year"
+msgstr ""
+
+msgid "Last Year"
+msgstr ""
+
+
+msgid "Page %(number)s of %(num_pages)s"
+msgstr ""
+

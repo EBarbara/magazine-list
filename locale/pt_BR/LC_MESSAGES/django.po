@@ -1,0 +1,206 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-01 15:25\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "Appearance"
+msgstr "Aparição"
+
+msgid "Appearances"
+msgstr "Aparições"
+
+msgid "Bulk Add"
+msgstr "Adicionar em lote"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Delete Issue"
+msgstr "Deletar edição"
+
+msgid "Delete Woman"
+msgstr "Deletar modelo"
+
+msgid "Ed."
+msgstr "Ed."
+
+msgid "Edition"
+msgstr "Número"
+
+msgid "Explore the complete collection of magazines and models."
+msgstr "Explore a coleção completa de revistas e modelos."
+
+msgid "First"
+msgstr "Primeiro"
+
+msgid "First Year"
+msgstr "Primeiro ano"
+
+msgid "Girls in this issue"
+msgstr "Modelos nesta edição"
+
+msgid "Go"
+msgstr "Ir"
+
+msgid "Go to year:"
+msgstr "Ir para ano:"
+
+msgid "Image"
+msgstr "Imagem"
+
+msgid "Import Cover from URL"
+msgstr "Importar capa a partir de URL"
+
+msgid "Issue"
+msgstr "Edição"
+
+msgid "Issue Cover"
+msgstr "Capa da edição"
+
+msgid "Issue Covers"
+msgstr "Capas das edições"
+
+msgid "Issues"
+msgstr "Edições"
+
+msgid "Last"
+msgstr "Último"
+
+msgid "Last Year"
+msgstr "Último ano"
+
+msgid "Magazine / Date"
+msgstr "Revista / Data"
+
+msgid "Models"
+msgstr "Modelos"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "New Issue"
+msgstr "Nova edição"
+
+msgid "New Woman"
+msgstr "Nova modelo"
+
+msgid "Next"
+msgstr "Próximo"
+
+msgid "Next Year"
+msgstr "Próximo ano"
+
+msgid "No Cover"
+msgstr "Sem capa"
+
+msgid "No appearances registered for this model."
+msgstr "Nenhuma aparição registrada para este modelo."
+
+msgid "No girls found in this issue."
+msgstr "Nenhuma modelo encontrada nesta edição."
+
+msgid "No issues found."
+msgstr "Nenhuma edição encontrada."
+
+msgid "No models found."
+msgstr "Nenhuma modelo encontrada."
+
+msgid "Our Models"
+msgstr "Nossas modelos"
+
+msgid "Prev"
+msgstr "Anterior"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Previous Year"
+msgstr "Ano anterior"
+
+msgid "Publishing Date"
+msgstr "Data de publicação"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Search"
+msgstr "Procurar"
+
+msgid "Search model..."
+msgstr "Procurar modelo..."
+
+msgid "Section"
+msgstr "Seção"
+
+msgid "Sections"
+msgstr "Seções"
+
+msgid "Upload & Save"
+msgstr "Salvar e enviar"
+
+msgid "Upload Cover from Computer"
+msgstr "Enviar capa do arquivo"
+
+msgid "View all Issues"
+msgstr "Ver todas as edições"
+
+msgid "View all Women"
+msgstr "Ver todas as modelos"
+
+msgid "View appearances"
+msgstr "Ver aparições"
+
+msgid "View details"
+msgstr "Ver detalhes"
+
+msgid "Welcome to Magazine List"
+msgstr "Bem-vindo ao Magazine List"
+
+msgid "Woman"
+msgstr "Modelo"
+
+msgid "Women"
+msgstr "Modelos"
+
+msgid "string"
+msgstr ""
+
+
+msgid "First"
+msgstr "Primeira"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Próxima"
+
+msgid "Last"
+msgstr "Última"
+
+msgid "First Year"
+msgstr "Primeiro Ano"
+
+msgid "Previous Year"
+msgstr "Ano Anterior"
+
+msgid "Next Year"
+msgstr "Próximo Ano"
+
+msgid "Last Year"
+msgstr "Último Ano"
+
+msgid "Page %(number)s of %(num_pages)s"
+msgstr "Página %(number)s de %(num_pages)s"
+

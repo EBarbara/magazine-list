@@ -1,14 +1,15 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="hero text-center">
-    <h1>Bem vindo ao Magazine List</h1>
+    <h1>{% trans "Welcome to Magazine List" %}</h1>
     <p class="hero-text">
-        Explore a coleção completa de revistas e modelos.
+        {% trans "Explore the complete collection of magazines and models." %}
     </p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="{% url 'woman_list' %}" class="btn">Ver todas as Mulheres</a>
-        <a href="{% url 'issue_list' %}" class="btn">Ver todas as Edições</a>
+        <a href="{% url 'woman_list' %}" class="btn">{% trans "View all Women" %}</a>
+        <a href="{% url 'issue_list' %}" class="btn">{% trans "View all Issues" %}</a>
     </div>
 </div>
 {% endblock %}

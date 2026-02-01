@@ -1,17 +1,18 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="breadcrumb">
     <a href="{% url 'home' %}">Home</a> /
-    <a href="{% url 'issue_list' %}">Edições</a> /
+    <a href="{% url 'issue_list' %}">{% trans "Issues" %}</a> /
     {{ issue }}
 </div>
 
 <div class="header-actions">
     <h1>{{ issue }}</h1>
     <div style="display: flex; gap: 0.5rem; align-items: center;">
-        <a href="{% url 'issue_cover_create' issue.pk %}" title="Upload Cover from Computer" class="open-modal"
-            style="color: inherit;">
+        <a href="{% url 'issue_cover_create' issue.pk %}" title="{% trans 'Upload Cover from Computer' %}"
+            class="open-modal" style="color: inherit;">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -19,8 +20,8 @@
                 <line x1="12" y1="3" x2="12" y2="15"></line>
             </svg>
         </a>
-        <a href="{% url 'issue_cover_url_add' issue.pk %}" title="Import Cover from URL" class="open-modal"
-            style="color: inherit;">
+        <a href="{% url 'issue_cover_url_add' issue.pk %}" title="{% trans 'Import Cover from URL' %}"
+            class="open-modal" style="color: inherit;">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -28,7 +29,7 @@
                 <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
         </a>
-        <a href="{% url 'issue_delete' issue.pk %}" class="btn-trash open-modal" title="Delete Issue">
+        <a href="{% url 'issue_delete' issue.pk %}" class="btn-trash open-modal" title="{% trans 'Delete Issue' %}">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 5 6 21 6"></polyline>
@@ -162,7 +163,7 @@
 <div class="card detail-section">
     <div class="card-content">
         <div class="header-actions" style="margin-bottom: 1rem;">
-            <h2 class="detail-header" style="margin-bottom: 0;">Garotas nesta edição</h2>
+            <h2 class="detail-header" style="margin-bottom: 0;">{% trans "Girls in this issue" %}</h2>
             <a href="{% url 'issue_appearance_create' issue.pk %}" class="btn-circle-add open-modal"
                 style="width: 32px; height: 32px; font-size: 20px;">+</a>
         </div>
@@ -171,9 +172,9 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 20%;">Seção</th>
-                    <th style="width: 60%;">Mulheres</th>
-                    <th style="width: 20%;">Ações</th>
+                    <th style="width: 20%;">{% trans "Section" %}</th>
+                    <th style="width: 60%;">{% trans "Women" %}</th>
+                    <th style="width: 20%;">{% trans "Actions" %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -238,7 +239,7 @@
             </tbody>
         </table>
         {% else %}
-        <p class="empty-state">Nenhuma garota encontrada nesta edição.</p>
+        <p class="empty-state">{% trans "No girls found in this issue." %}</p>
         {% endif %}
     </div>
 </div>

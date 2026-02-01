@@ -1,15 +1,16 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="breadcrumb">
     <a href="{% url 'home' %}">Home</a> /
-    <a href="{% url 'woman_list' %}">Modelos</a> /
+    <a href="{% url 'woman_list' %}">{% trans "Models" %}</a> /
     {{ woman.name }}
 </div>
 
 <div class="header-actions">
     <h1>{{ woman.name }}</h1>
-    <a href="{% url 'woman_delete' woman.pk %}" class="btn-trash open-modal" title="Delete Woman">
+    <a href="{% url 'woman_delete' woman.pk %}" class="btn-trash open-modal" title="{% trans 'Delete Woman' %}">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="3 6 5 6 21 6"></polyline>
@@ -21,11 +22,11 @@
 <div class="card detail-section">
     <div class="card-content">
         <div class="header-actions" style="margin-bottom: 1rem;">
-            <h2 class="detail-header" style="margin-bottom: 0;">Aparições</h2>
+            <h2 class="detail-header" style="margin-bottom: 0;">{% trans "Appearances" %}</h2>
             <div style="display: flex; gap: 0.5rem;">
                 <a href="{% url 'woman_appearance_bulk_add' woman.pk %}" class="btn-circle-add open-modal"
                     style="width: 32px; height: 32px; font-size: 16px; display: flex; align-items: center; justify-content: center;"
-                    title="Bulk Add">
+                    title="{% trans 'Bulk Add' %}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="8" y1="6" x2="21" y2="6"></line>
@@ -45,10 +46,10 @@
         <table>
             <thead>
                 <tr>
-                    <th>Revista / Data</th>
-                    <th>Edição</th>
-                    <th>Seção</th>
-                    <th>Actions</th>
+                    <th>{% trans "Magazine / Date" %}</th>
+                    <th>{% trans "Edition" %}</th>
+                    <th>{% trans "Section" %}</th>
+                    <th>{% trans "Actions" %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,7 +62,8 @@
                     </td>
                     <td>
                         {% if appearance.issue.edition %}
-                        <a href="{% url 'issue_detail' appearance.issue.pk %}">Ed. {{ appearance.issue.edition }}</a>
+                        <a href="{% url 'issue_detail' appearance.issue.pk %}">{% trans "Ed." %} {{
+                            appearance.issue.edition }}</a>
                         {% else %}
                         -
                         {% endif %}
@@ -86,7 +88,7 @@
             </tbody>
         </table>
         {% else %}
-        <p class="empty-state">Nenhuma aparição registrada para esta modelo.</p>
+        <p class="empty-state">{% trans "No appearances registered for this model." %}</p>
         {% endif %}
     </div>
 </div>

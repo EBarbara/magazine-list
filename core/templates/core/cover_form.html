@@ -1,9 +1,10 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
 {% block content %}
 
 
-<h2>{{ title|default:"Upload Cover" }}</h2>
+<h2>{{ title|default:_("Upload Cover") }}</h2>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -25,8 +26,8 @@
     </div>
 
     <div class="form-actions">
-        <a href="{% url 'issue_detail' issue.pk %}" class="btn-cancel">Cancel</a>
-        <button type="submit">Upload & Save</button>
+        <a href="{% url 'issue_detail' issue.pk %}" class="btn-cancel">{% trans "Cancel" %}</a>
+        <button type="submit">{% trans "Upload & Save" %}</button>
     </div>
 </form>
 {% endblock %}

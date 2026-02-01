@@ -1,13 +1,14 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
 {% block content %}
-<h2>New Woman</h2>
+<h2>{% trans "New Woman" %}</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <div class="form-actions">
-        <a href="{% url 'woman_list' %}" class="btn-cancel">Cancel</a>
-        <button type="submit">Save</button>
+        <a href="{% url 'woman_list' %}" class="btn-cancel">{% trans "Cancel" %}</a>
+        <button type="submit">{% trans "Save" %}</button>
     </div>
 </form>
 {% endblock %}

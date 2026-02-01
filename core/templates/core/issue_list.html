@@ -1,14 +1,15 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="header-actions">
     <div class="breadcrumb">
-        <a href="{% url 'home' %}">Home</a> / Edições
+        <a href="{% url 'home' %}">Home</a> / {% trans "Issues" %}
     </div>
-    <a href="{% url 'issue_create' %}" class="btn-circle-add open-modal" title="Nova Edição">+</a>
+    <a href="{% url 'issue_create' %}" class="btn-circle-add open-modal" title="{% trans 'New Issue' %}">+</a>
 </div>
 
-<h1>Edições</h1>
+<h1>{% trans "Issues" %}</h1>
 
 <div class="grid-cards">
     {% for issue in issues %}
@@ -33,7 +34,7 @@
             {% else %}
             <div
                 style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af;">
-                No Cover
+                {% trans "No Cover" %}
             </div>
             {% endif %}
             {% endwith %}
@@ -41,12 +42,12 @@
         <div class="card-content">
             <h3>{{ issue }}</h3>
             <p class="cta-text">
-                Ver detalhes &rarr;
+                {% trans "View details" %} &rarr;
             </p>
         </div>
     </a>
     {% empty %}
-    <p class="empty-state">Nenhuma edição encontrada.</p>
+    <p class="empty-state">{% trans "No issues found." %}</p>
     {% endfor %}
 </div>
 
@@ -112,16 +113,20 @@
     <div class="pagination-controls" style="display: flex; align-items: center; gap: 0.5rem;">
         <!-- First Year -->
         {% if current_year != first_year %}
-        <a href="?year={{ first_year }}" class="btn" title="First Year ({{ first_year }})">&laquo; First</a>
+        <a href="?year={{ first_year }}" class="btn" title="{% trans 'First Year' %} ({{ first_year }})">
+            &laquo; {% trans "First" %}
+        </a>
         {% else %}
-        <span class="btn disabled">&laquo; First</span>
+        <span class="btn disabled">&laquo; {% trans "First" %}</span>
         {% endif %}
 
         <!-- Previous Year -->
         {% if previous_year %}
-        <a href="?year={{ previous_year }}" class="btn" title="Previous Year ({{ previous_year }})">&lsaquo; Prev</a>
+        <a href="?year={{ previous_year }}" class="btn" title="{% trans 'Previous Year' %} ({{ previous_year }})">
+            &lsaquo; {% trans "Prev" %}
+        </a>
         {% else %}
-        <span class="btn disabled">&lsaquo; Prev</span>
+        <span class="btn disabled">&lsaquo; {% trans "Prev" %}</span>
         {% endif %}
 
         <!-- Current Year Display -->
@@ -131,25 +136,29 @@
 
         <!-- Next Year -->
         {% if next_year %}
-        <a href="?year={{ next_year }}" class="btn" title="Next Year ({{ next_year }})">Next &rsaquo;</a>
+        <a href="?year={{ next_year }}" class="btn" title="{% trans 'Next Year' %} ({{ next_year }})">
+            {% trans "Next" %} &rsaquo;
+        </a>
         {% else %}
-        <span class="btn disabled">Next &rsaquo;</span>
+        <span class="btn disabled">{% trans "Next" %} &rsaquo;</span>
         {% endif %}
 
         <!-- Last Year -->
         {% if current_year != last_year %}
-        <a href="?year={{ last_year }}" class="btn" title="Last Year ({{ last_year }})">Last &raquo;</a>
+        <a href="?year={{ last_year }}" class="btn" title="{% trans 'Last Year' %} ({{ last_year }})">
+            {% trans "Last" %} &raquo;
+        </a>
         {% else %}
-        <span class="btn disabled">Last &raquo;</span>
+        <span class="btn disabled">{% trans "Last" %} &raquo;</span>
         {% endif %}
     </div>
 
     <!-- Go to specific year form -->
     <form action="" method="get" class="goto-year-form" style="display: flex; align-items: center; gap: 0.5rem;">
-        <label for="year-input">Go to year:</label>
+        <label for="year-input">{% trans "Go to year:" %}</label>
         <input type="number" id="year-input" name="year" min="{{ first_year }}" max="{{ last_year }}"
             value="{{ current_year }}" class="form-control" style="width: 80px; text-align: center;">
-        <button type="submit" class="btn btn-sm">Go</button>
+        <button type="submit" class="btn btn-sm">{% trans "Go" %}</button>
     </form>
 
 </div>
