@@ -4,18 +4,21 @@
 {% block content %}
 <h2 style="margin-bottom: 1rem;">{% trans "Confirm Delete" %}</h2>
 <p style="margin-bottom: 2rem; color: var(--text-secondary);">
-    {% blocktrans with object=object trimmed %}Are you sure you want to delete "{{ object }}"? This action cannot be
-    undone.{% endblocktrans %}
+    {% blocktrans with object=object trimmed %}
+    Are you sure you want to delete "{{ object }}"? This action cannot be undone.
+    {% endblocktrans %}
 </p>
 
 <form method="post">
     {% csrf_token %}
     <div class="form-actions">
         <a href="javascript:history.back()" class="btn-cancel"
-            onclick="if(document.querySelector('dialog[open]')){event.preventDefault(); document.getElementById('generic-modal').close();}">{%
-            trans "Cancel" %}</a>
-        <button type="submit" class="btn-delete" style="background-color: #ef4444;">{% trans "Confirm Delete"
-            %}</button>
+            onclick="if(document.querySelector('dialog[open]')){event.preventDefault(); document.getElementById('generic-modal').close();}">
+            {% trans "Cancel" %}
+        </a>
+        <button type="submit" class="btn-delete" style="background-color: #ef4444;">
+            {% trans "Confirm Delete" %}
+        </button>
     </div>
 </form>
 {% endblock %}
