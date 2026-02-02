@@ -1,5 +1,6 @@
 import unicodedata
 from django.shortcuts import render, redirect
+from django.utils.translation import gettext as _
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
 from django.urls import reverse_lazy
 from .models import Woman, Issue, Appearance, Section, IssueCover
@@ -19,8 +20,8 @@ class WomanAppearanceBulkCreateView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['woman'] = Woman.objects.get(pk=self.kwargs['pk'])
-        context['title'] = f"Bulk Add Appearances for {context['woman'].name}"
+        context['woman'] = Woman.objects.get(pk=kwargs.get('pk') or self.kwargs['pk'])
+        context['title'] = _("Bulk Add Appearances for %(woman)s") % {'woman': context['woman'].name}
         return context
 
     def form_valid(self, form):
@@ -263,7 +264,8 @@ class WomanAppearanceUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['woman'] = self.object.woman
         context['sections'] = Section.objects.all() # For datalist
-        context['title'] = f"Edit Appearance for {self.object.woman.name}"
+        context['sections'] = Section.objects.all() # For datalist
+        context['title'] = _("Edit Appearance for %(woman)s") % {'woman': self.object.woman.name}
         return context
 
 class IssueAppearanceUpdateView(UpdateView):
@@ -285,7 +287,8 @@ class IssueAppearanceUpdateView(UpdateView):
         context['issue'] = self.object.issue
         context['women'] = Woman.objects.all() # For datalist
         context['sections'] = Section.objects.all() # For datalist
-        context['title'] = f"Edit Appearance in {self.object.issue}"
+        context['sections'] = Section.objects.all() # For datalist
+        context['title'] = _("Edit Appearance in %(issue)s") % {'issue': self.object.issue}
         return context
 
 class AppearanceDeleteView(DeleteView):
@@ -313,7 +316,8 @@ class IssueSectionUpdateView(FormView):
         self.issue = Issue.objects.get(pk=self.kwargs['issue_pk'])
         self.section = Section.objects.get(pk=self.kwargs['section_pk'])
         context['issue'] = self.issue
-        context['title'] = f"Update Section '{self.section.name}' for all appearances in {self.issue}"
+        context['issue'] = self.issue
+        context['title'] = _("Update Section '%(section)s' for all appearances in %(issue)s") % {'section': self.section.name, 'issue': self.issue}
         context['sections'] = Section.objects.all() # For datalist
         # We need a flag to differentiate template behavior if needed, or just use generic title
         return context
@@ -350,7 +354,8 @@ class IssueSectionDeleteView(DeleteView):
         issue = Issue.objects.get(pk=self.kwargs['issue_pk'])
         section = self.get_object()
         count = Appearance.objects.filter(issue=issue, section=section).count()
-        context['object_name'] = f"Section '{section.name}' from {issue} (will delete {count} appearances)"
+        count = Appearance.objects.filter(issue=issue, section=section).count()
+        context['object_name'] = _("Section '%(section)s' from %(issue)s (will delete %(count)s appearances)") % {'section': section.name, 'issue': issue, 'count': count}
         context['cancel_url'] = reverse_lazy('issue_detail', kwargs={'pk': issue.pk})
         return context
 
@@ -370,7 +375,8 @@ class IssueCoverFromUrlView(FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['issue'] = Issue.objects.get(pk=self.kwargs['issue_pk'])
-        context['title'] = f"Add Cover from URL for {context['issue']}"
+        context['issue'] = Issue.objects.get(pk=self.kwargs['issue_pk'])
+        context['title'] = _("Add Cover from URL for %(issue)s") % {'issue': context['issue']}
         return context
 
     def form_valid(self, form):
@@ -420,7 +426,8 @@ class IssueCoverCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['issue'] = Issue.objects.get(pk=self.kwargs['pk'])
-        context['title'] = f"Upload Cover for {context['issue']}"
+        context['issue'] = Issue.objects.get(pk=self.kwargs['pk'])
+        context['title'] = _("Upload Cover for %(issue)s") % {'issue': context['issue']}
         return context
 
     def get_success_url(self):

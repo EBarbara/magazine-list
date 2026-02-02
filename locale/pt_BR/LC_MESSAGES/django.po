@@ -204,3 +204,77 @@ msgstr "Último Ano"
 msgid "Page %(number)s of %(num_pages)s"
 msgstr "Página %(number)s de %(num_pages)s"
 
+
+msgid "Add Appearance"
+msgstr "Adicionar Aparição"
+
+msgid "Add Appearances"
+msgstr "Adicionar Aparições"
+
+msgid "Bulk Data (Format: Month/Year; Edition; Section)"
+msgstr "Dados em Massa (Formato: Mês/Ano; Edição; Seção)"
+
+msgid "Example"
+msgstr "Exemplo"
+
+msgid "Add Cover from URL"
+msgstr "Adicionar Capa via URL"
+
+msgid "Download & Save"
+msgstr "Baixar e Salvar"
+
+msgid "Confirm Delete"
+msgstr "Confirmar Exclusão"
+
+msgid "Are you sure you want to delete \"%(object)s\"? This action cannot be undone."
+msgstr "Tem certeza que deseja excluir \"%(object)s\"? Esta ação não pode ser desfeita."
+
+
+msgid "Format: Month/Year; Edition; Section"
+msgstr "Formato: Mês/Ano; Edição; Seção"
+
+msgid "jan/90; 1; Capa\nfev/95; ; Entrevista"
+msgstr "jan/90; 1; Capa\nfev/95; ; Entrevista"
+
+msgid "Issue with this Publishing Date and Edition already exists."
+msgstr "Já existe uma edição com esta Data de Publicação e Número."
+
+msgid "Existing Issue"
+msgstr "Edição Existente"
+
+msgid "Or New Issue Date"
+msgstr "Ou Data de Nova Edição"
+
+msgid "Edition (Optional)"
+msgstr "Número (Opcional)"
+
+msgid "You must select an existing issue OR provide a date for a new one."
+msgstr "Você deve selecionar uma edição existente OU fornecer uma data para uma nova."
+
+msgid " OR "
+msgstr " OU "
+
+msgid "Image URL"
+msgstr "URL da Imagem"
+
+msgid "Bulk Add Appearances for %(woman)s"
+msgstr "Adicionar Aparições em Massa para %(woman)s"
+
+msgid "Edit Appearance for %(woman)s"
+msgstr "Editar Aparição de %(woman)s"
+
+msgid "Edit Appearance in %(issue)s"
+msgstr "Editar Aparição na %(issue)s"
+
+msgid "Update Section '%(section)s' for all appearances in %(issue)s"
+msgstr "Atualizar Seção '%(section)s' para todas as aparições na %(issue)s"
+
+msgid "Section '%(section)s' from %(issue)s (will delete %(count)s appearances)"
+msgstr "Seção '%(section)s' da %(issue)s (excluirá %(count)s aparições)"
+
+msgid "Add Cover from URL for %(issue)s"
+msgstr "Adicionar Capa via URL para %(issue)s"
+
+msgid "Upload Cover for %(issue)s"
+msgstr "Enviar Capa para %(issue)s"
+

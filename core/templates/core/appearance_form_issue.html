@@ -1,7 +1,8 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h2>{{ title|default:"Add Appearance" }}</h2>
+{% load i18n %}
+<h2>{% if title %}{{ title }}{% else %}{% trans "Add Appearance" %}{% endif %}</h2>
 <form method="post">
     {% csrf_token %}
 
@@ -24,8 +25,8 @@
     </datalist>
 
     <div class="form-actions">
-        <a href="{% url 'issue_detail' issue.pk %}" class="btn-cancel">Cancel</a>
-        <button type="submit">Save</button>
+        <a href="{% url 'issue_detail' issue.pk %}" class="btn-cancel">{% trans "Cancel" %}</a>
+        <button type="submit">{% trans "Save" %}</button>
     </div>
 </form>
 {% endblock %}

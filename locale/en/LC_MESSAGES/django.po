@@ -205,3 +205,77 @@ msgstr ""
 msgid "Page %(number)s of %(num_pages)s"
 msgstr ""
 
+
+msgid "Add Appearance"
+msgstr ""
+
+msgid "Add Appearances"
+msgstr ""
+
+msgid "Bulk Data (Format: Month/Year; Edition; Section)"
+msgstr ""
+
+msgid "Example"
+msgstr ""
+
+msgid "Add Cover from URL"
+msgstr ""
+
+msgid "Download & Save"
+msgstr ""
+
+msgid "Confirm Delete"
+msgstr ""
+
+msgid "Are you sure you want to delete \"%(object)s\"? This action cannot be undone."
+msgstr ""
+
+
+msgid "Format: Month/Year; Edition; Section"
+msgstr ""
+
+msgid "jan/90; 1; Capa\nfev/95; ; Entrevista"
+msgstr ""
+
+msgid "Issue with this Publishing Date and Edition already exists."
+msgstr ""
+
+msgid "Existing Issue"
+msgstr ""
+
+msgid "Or New Issue Date"
+msgstr ""
+
+msgid "Edition (Optional)"
+msgstr ""
+
+msgid "You must select an existing issue OR provide a date for a new one."
+msgstr ""
+
+msgid " OR "
+msgstr ""
+
+msgid "Image URL"
+msgstr ""
+
+msgid "Bulk Add Appearances for %(woman)s"
+msgstr ""
+
+msgid "Edit Appearance for %(woman)s"
+msgstr ""
+
+msgid "Edit Appearance in %(issue)s"
+msgstr ""
+
+msgid "Update Section '%(section)s' for all appearances in %(issue)s"
+msgstr ""
+
+msgid "Section '%(section)s' from %(issue)s (will delete %(count)s appearances)"
+msgstr ""
+
+msgid "Add Cover from URL for %(issue)s"
+msgstr ""
+
+msgid "Upload Cover for %(issue)s"
+msgstr ""
+

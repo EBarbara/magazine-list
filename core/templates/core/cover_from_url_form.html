@@ -1,13 +1,14 @@
 {% extends 'core/base.html' %}
 
+{% load i18n %}
 {% block content %}
 
 
-<h2>{{ title|default:"Add Cover from URL" }}</h2>
+<h2>{{ title|default:_("Add Cover from URL") }}</h2>
 
 <form method="post">
     {% csrf_token %}
-    
+
     {% if form.non_field_errors %}
     <div class="error-message">
         {{ form.non_field_errors }}
@@ -25,8 +26,8 @@
     </div>
 
     <div class="form-actions">
-        <a href="{% url 'issue_detail' issue.pk %}" class="btn-cancel">Cancel</a>
-        <button type="submit">Download & Save</button>
+        <a href="{% url 'issue_detail' issue.pk %}" class="btn-cancel">{% trans "Cancel" %}</a>
+        <button type="submit">{% trans "Download & Save" %}</button>
     </div>
 </form>
 {% endblock %}

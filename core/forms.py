@@ -1,11 +1,12 @@
 from django import forms
 from .models import Issue, Appearance, IssueCover
 from datetime import date
+from django.utils.translation import gettext_lazy as _
 
 class BulkAppearanceForm(forms.Form):
     content = forms.CharField(
-        widget=forms.Textarea(attrs={'rows': 10, 'placeholder': 'jan/90; 1; Capa\nfev/95; ; Entrevista'}),
-        help_text="Format: Month/Year; Edition; Section"
+        widget=forms.Textarea(attrs={'rows': 10, 'placeholder': _('jan/90; 1; Capa\nfev/95; ; Entrevista')}),
+        help_text=_("Format: Month/Year; Edition; Section")
     )
 
     def clean_content(self):
@@ -102,7 +103,7 @@ class IssueForm(forms.ModelForm):
                 query = query.filter(edition=edition)
 
             if query.exists():
-                raise forms.ValidationError("Issue with this Publishing Date and Edition already exists.")
+                raise forms.ValidationError(_("Issue with this Publishing Date and Edition already exists."))
         
         return cleaned_data
 
@@ -111,7 +112,7 @@ class WomanAppearanceForm(forms.ModelForm):
     issue = forms.ModelChoiceField(
         queryset=Issue.objects.all().order_by('publishing_date'),
         required=False,
-        label="Existing Issue"
+        label=_("Existing Issue")
     )
     
     # Fields to create a NEW issue
@@ -119,12 +120,12 @@ class WomanAppearanceForm(forms.ModelForm):
         required=False, 
         widget=forms.DateInput(attrs={'type': 'month'}, format='%Y-%m'),
         input_formats=['%Y-%m'],
-        label="Or New Issue Date"
+        label=_("Or New Issue Date")
     )
-    new_issue_edition = forms.IntegerField(required=False, label="Edition (Optional)")
+    new_issue_edition = forms.IntegerField(required=False, label=_("Edition (Optional)"))
 
     # Field for Section (Choose or Create)
-    section_name = forms.CharField(label="Section", widget=forms.TextInput(attrs={'list': 'sections-list'}))
+    section_name = forms.CharField(label=_("Section"), widget=forms.TextInput(attrs={'list': 'sections-list'}))
 
     class Meta:
         model = Appearance
@@ -136,7 +137,7 @@ class WomanAppearanceForm(forms.ModelForm):
         new_issue_date = cleaned_data.get('new_issue_date')
         
         if not issue and not new_issue_date:
-            raise forms.ValidationError("You must select an existing issue OR provide a date for a new one.")
+            raise forms.ValidationError(_("You must select an existing issue OR provide a date for a new one."))
         
         return cleaned_data
 
@@ -174,10 +175,10 @@ class WomanAppearanceForm(forms.ModelForm):
 
 class IssueAppearanceForm(forms.ModelForm):
     # Field for Woman (Choose or Create)
-    woman_name = forms.CharField(label="Woman", widget=forms.TextInput(attrs={'list': 'women-list'}))
+    woman_name = forms.CharField(label=_("Woman"), widget=forms.TextInput(attrs={'list': 'women-list'}))
     
     # Field for Section (Choose or Create)
-    section_name = forms.CharField(label="Section", widget=forms.TextInput(attrs={'list': 'sections-list'}))
+    section_name = forms.CharField(label=_("Section"), widget=forms.TextInput(attrs={'list': 'sections-list'}))
 
     class Meta:
         model = Appearance
@@ -203,7 +204,7 @@ class IssueAppearanceForm(forms.ModelForm):
         return instance
 
 class IssueCoverUrlForm(forms.Form):
-    url = forms.URLField(label="Image URL", required=True, widget=forms.TextInput(attrs={'placeholder': 'https://example.com/image.jpg'}))
+    url = forms.URLField(label=_("Image URL"), required=True, widget=forms.TextInput(attrs={'placeholder': 'https://example.com/image.jpg'}))
 
 class IssueCoverForm(forms.ModelForm):
     class Meta:

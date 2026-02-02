@@ -62,8 +62,9 @@
                     </td>
                     <td>
                         {% if appearance.issue.edition %}
-                        <a href="{% url 'issue_detail' appearance.issue.pk %}">{% trans "Ed." %} {{
-                            appearance.issue.edition }}</a>
+                        <a href="{% url 'issue_detail' appearance.issue.pk %}">
+                            {% trans "Ed." %} {{ appearance.issue.edition }}
+                        </a>
                         {% else %}
                         -
                         {% endif %}
